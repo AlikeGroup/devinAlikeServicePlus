@@ -8,23 +8,21 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-* [X]	User can **sign in** using OAuth login
-* [X]	User can **view items**
-  * [X] User is displayed the username, name, and body for each tweet
-  * [X] User is displayed the [relative timestamp](https://gist.github.com/nesquena/f786232f5ef72f6e10a7) for each tweet "8m", "7h"
-  * [X] User can view more tweets as they scroll with [infinite pagination](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews). Number of tweets is unlimited.
-
-The following **optional** features are implemented:
-
-* [X] User can **see a counter with total number of characters left for tweet** on compose tweet page
-
-The following **bonus** features are implemented:
-
-* [ ] User can see embedded image media within the tweet detail view
-
-The following **additional** features are implemented:
-
-* [ ] List anything else that you can get done to improve the app functionality!
+* [ ]	User can stream house information
+  * [ ] tab (sort by price, sort by post time, map view)
+  * [ ] filter by setting
+* [ ] User can detail house information
+  * [ ] User can view photo of house
+  * [ ] User can view basic information of house (address, price, attribute)
+  * [ ] User can view map of house
+* [ ] User can set search arguments in setting page
+  * [ ] User can search by price
+  * [ ] User can search by room number
+  * [ ] User can search by house age
+* [ ] User can view profile
+  * [ ] User can edit search preference
+  * [ ] User can add search preference
+  * [ ] User can delete search preference
 
 ## Video Walkthrough 
 
