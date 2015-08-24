@@ -8,13 +8,14 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-* [ ]	User can stream house information
+* [ ] User can view stream of house information
+  * [ ] **tab (map view), and base on current location** (mobile-oriented features)
   * [ ] tab (sort by price, sort by post time)
-  * [ ] tab (map view)
   * [ ] filter by setting
-* [ ] User can detail house information
-  * [ ] User can view photo of house
+* [ ] User can view detail of house information
   * [ ] User can view basic information of house (address, price, attribute)
+  * [ ] **User can dial directly to seller through phone number show in detail page** (mobile-oriented features)
+  * [ ] User can view photo of house
   * [ ] User can view map of house
 * [ ] User can set search arguments in setting page
   * [ ] User can search by price
