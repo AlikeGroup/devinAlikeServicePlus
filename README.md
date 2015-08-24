@@ -1,6 +1,6 @@
-# Project Group - *DevinAlikeServicePlus*
+# Project Group - *HouseFinder*
 
-**DevinAlikeServicePlus** is an android app that allows a user to view his Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
+**HouseFinder** is an android app that allows a user to find houses on sale which list in tw.serivceplus.yahoo.com 
 
 Time spent: **X** hours spent in total
 
@@ -9,7 +9,8 @@ Time spent: **X** hours spent in total
 The following **required** functionality is completed:
 
 * [ ]	User can stream house information
-  * [ ] tab (sort by price, sort by post time, map view)
+  * [ ] tab (sort by price, sort by post time)
+  * [ ] tab (map view)
   * [ ] filter by setting
 * [ ] User can detail house information
   * [ ] User can view photo of house
@@ -23,6 +24,21 @@ The following **required** functionality is completed:
   * [ ] User can edit search preference
   * [ ] User can add search preference
   * [ ] User can delete search preference
+
+## Concept wireframe
+
+List/Map view:
+<img src="http://www.android-app-patterns.com/img/sets/streams/twitter-stream-2.png" height="420" alt="Stream">
+<img src="http://www.android-app-patterns.com/img/sets/content-item/148_5_content-item.png" height="420" alt="Detail">
+
+Detail house info:
+<img src="http://www.android-app-patterns.com/img/screens/52935ea54ecfa.png" height="420" alt="Detail">
+
+Search setting:
+<img src="http://www.android-app-patterns.com/img/sets/settings/Pinterest_1_settings.png" height="420" alt="Profile">
+
+User profile:
+<img src="http://www.android-app-patterns.com/img/sets/profile-pages/Pinterest_4_profile-pages.png" height="420" alt="Profile">
 
 ## Video Walkthrough 
 
