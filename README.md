@@ -1,6 +1,6 @@
 # Project Group - *HouseFinder*
 
-**HouseFinder** is an android app that allows a user to find houses on sale which list in tw.serivceplus.yahoo.com 
+**HouseFinder** is an android app that allows a user to find houses on sale which list in https://tw.serviceplus.yahoo.com/house/category/000000515223/
 
 Time spent: **X** hours spent in total
 
