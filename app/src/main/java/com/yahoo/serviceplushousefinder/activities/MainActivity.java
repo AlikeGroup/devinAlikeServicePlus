@@ -1,17 +1,32 @@
-package com.yahoo.serviceplushousefinder;
+package com.yahoo.serviceplushousefinder.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.astuetz.PagerSlidingTabStrip;
+import com.yahoo.serviceplushousefinder.R;
+import com.yahoo.serviceplushousefinder.adapters.ListingFragmentPagerAdapter;
+import com.yahoo.serviceplushousefinder.fragments.ListingFragment;
 
-public class MainActivity extends ActionBarActivity {
+
+public class MainActivity extends ActionBarActivity implements ListingFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
+        vPager.setAdapter(new ListingFragmentPagerAdapter(getSupportFragmentManager(), this));
+        // Give the PagerSlidingTabStrip the ViewPager
+        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        // Attach the view pager to the tab strip
+        tabsStrip.setViewPager(vPager);
     }
 
     @Override
