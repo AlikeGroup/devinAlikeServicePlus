@@ -1,5 +1,6 @@
 package com.yahoo.serviceplushousefinder.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -44,10 +45,22 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.bar_search_setting) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickSetting(MenuItem item) {
+        Intent intent = new Intent(this, SearchSettingActivity.class);
+        intent.putExtra("user", "user1");
+        startActivity(intent);
+    }
+
+    public void onClickProfile(MenuItem item) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("user", "user1");
+        startActivity(intent);
     }
 }
