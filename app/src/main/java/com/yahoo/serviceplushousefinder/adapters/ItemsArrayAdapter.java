@@ -58,7 +58,7 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
 
     private void onClickItem(Item item) {
         Intent intent = new Intent(this.context, DetailActivity.class);
-        intent.putExtra("user", "user1");
+        intent.putExtra("item", item);
         this.context.startActivity(intent);
     }
 

@@ -4,15 +4,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.yahoo.serviceplushousefinder.R;
+import com.yahoo.serviceplushousefinder.models.Item;
 
 public class DetailActivity extends ActionBarActivity {
+
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        item = (Item) getIntent().getParcelableExtra("item");
+
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(item.getTitle());
+
     }
 
     @Override
