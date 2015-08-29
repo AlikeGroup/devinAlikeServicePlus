@@ -1,0 +1,48 @@
+package com.yahoo.serviceplushousefinder.adapters;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.yahoo.serviceplushousefinder.R;
+import com.yahoo.serviceplushousefinder.models.Item;
+
+import java.util.List;
+
+/**
+ * Created by aliku on 2015/8/29.
+ */
+public class ItemsArrayAdapter extends ArrayAdapter<Item> {
+    Context context;
+
+    public ItemsArrayAdapter(Context context, List<Item> items) {
+        super(context, android.R.layout.simple_list_item_1, items);
+        this.context = context;
+    }
+
+    // override and setup custom template
+
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final Item item = getItem(position);
+        if (convertView == null){
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.listing_item,parent,false);
+        }
+
+        ImageView ivHouseImage = (ImageView) convertView.findViewById(R.id.ivHouseImage);
+        ivHouseImage.setImageResource(R.drawable.ic_picture);
+
+        TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+        tvTitle.setText(item.getTitle());
+        TextView tvAddress = (TextView) convertView.findViewById(R.id.tvAddress);
+        tvAddress.setText(item.getAddress());
+
+        return convertView;
+    }
+
+}
