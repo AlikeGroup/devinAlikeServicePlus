@@ -1,14 +1,17 @@
 package com.yahoo.serviceplushousefinder.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yahoo.serviceplushousefinder.R;
+import com.yahoo.serviceplushousefinder.activities.DetailActivity;
 import com.yahoo.serviceplushousefinder.models.Item;
 
 import java.util.List;
@@ -42,7 +45,21 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         TextView tvAddress = (TextView) convertView.findViewById(R.id.tvAddress);
         tvAddress.setText(item.getAddress());
 
+        final RelativeLayout rlTweetCard = (RelativeLayout) convertView.findViewById(R.id.rlListingItem);
+        rlTweetCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickItem(item);
+            }
+        });
+
         return convertView;
+    }
+
+    private void onClickItem(Item item) {
+        Intent intent = new Intent(this.context, DetailActivity.class);
+        intent.putExtra("user", "user1");
+        this.context.startActivity(intent);
     }
 
 }

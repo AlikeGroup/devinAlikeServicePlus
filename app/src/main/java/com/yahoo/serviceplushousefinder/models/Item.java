@@ -90,7 +90,7 @@ public class Item {
                     case "title":
                         item.title = fieldArray.getJSONObject(i).getString("content");
                         break;
-                    case "address":
+                    case "location":
                         item.address = fieldArray.getJSONObject(i).getString("content");
                         break;
                     case "latlong":
