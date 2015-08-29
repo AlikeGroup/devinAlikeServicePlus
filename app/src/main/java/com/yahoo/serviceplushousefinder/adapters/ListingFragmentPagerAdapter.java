@@ -12,7 +12,7 @@ import com.yahoo.serviceplushousefinder.fragments.ListingFragment;
  */
 public class ListingFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
+    private String tabTitles[] = new String[] { "Price", "Area", "Time" };
     private Context context;
 
     public ListingFragmentPagerAdapter(FragmentManager fm, Context context) {

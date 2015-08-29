@@ -21,6 +21,7 @@ public class Item implements Parcelable {
     private int pageview;
     private String price;
     private String descs;
+    private String imageurl;
 
     public String getId() {
         return id;
@@ -78,6 +79,14 @@ public class Item implements Parcelable {
         this.descs = descs;
     }
 
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
+
     public static Item fromJSON(JSONArray fieldArray) {
         Item item = new Item();
         String name;
@@ -111,6 +120,14 @@ public class Item implements Parcelable {
                     case "descs":
                         item.descs = fieldArray.getJSONObject(i).getString("content");
                         break;
+                    case "images":
+                        if (hasContent) {
+                            String imageJsonStr = fieldArray.getJSONObject(i).getString("content");
+                            item.imageurl = getImageUrl(imageJsonStr);
+                        } else {
+                            item.imageurl = "";
+                        }
+                        break;
                 }
                 //item.save(); // insert into sqllite
             } catch (JSONException e) {
@@ -118,6 +135,18 @@ public class Item implements Parcelable {
             }
         }
         return item;
+    }
+
+    private static String getImageUrl(String imageJsonStr) {
+        String imgUrl = "";
+        try {
+            JSONObject obj = new JSONObject(imageJsonStr);
+            imgUrl = obj.getJSONObject("large").getString("url");
+            //Log.d("imgurl", imgUrl);
+        } catch (Throwable t) {
+            Log.e("imgurl", "Could not parse malformed JSON: \"" + imageJsonStr + "\"");
+        }
+        return imgUrl;
     }
 
     public static ArrayList<Item> fromJSONObject(JSONObject json){
@@ -155,6 +184,7 @@ public class Item implements Parcelable {
         out.writeString(latlong);
         out.writeString(price);
         out.writeString(descs);
+        out.writeString(imageurl);
         out.writeInt(pageview);
     }
 
@@ -173,6 +203,7 @@ public class Item implements Parcelable {
         latlong = in.readString();
         price = in.readString();
         descs = in.readString();
+        imageurl = in.readString();
         pageview = in.readInt();
     }
 
@@ -199,4 +230,5 @@ public class Item implements Parcelable {
             return new Item[size];
         }
     };
+
 }

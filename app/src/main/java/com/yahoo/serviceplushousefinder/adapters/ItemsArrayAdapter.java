@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.yahoo.serviceplushousefinder.R;
 import com.yahoo.serviceplushousefinder.activities.DetailActivity;
 import com.yahoo.serviceplushousefinder.models.Item;
@@ -38,7 +39,17 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         }
 
         ImageView ivHouseImage = (ImageView) convertView.findViewById(R.id.ivHouseImage);
-        ivHouseImage.setImageResource(R.drawable.ic_picture);
+        if (item.getImageurl() != "") {
+            // insert the image using picasso
+            Picasso.with(getContext())
+                    .load(item.getImageurl())
+                    .placeholder(R.drawable.ic_picture)
+                    .error(R.drawable.ic_picture)
+                    .fit()
+                    .into(ivHouseImage);
+        } else {
+            ivHouseImage.setImageResource(R.drawable.ic_picture);
+        }
 
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         tvTitle.setText(item.getTitle());
