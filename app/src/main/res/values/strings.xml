@@ -9,5 +9,5 @@
     <string name="title_activity_search_setting">Search Setting</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_detail">Detail</string>
-    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_map">Map</string>
 </resources>

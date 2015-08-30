@@ -7,6 +7,8 @@ import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.yahoo.serviceplushousefinder.R;
+import com.yahoo.serviceplushousefinder.fragments.ListingFragment;
 
 public class MapActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -61,6 +64,11 @@ public class MapActivity extends AppCompatActivity implements
         } else {
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flMapListing, ListingFragment.newInstance(1));
+        fragmentTransaction.commit();
 
     }
 
