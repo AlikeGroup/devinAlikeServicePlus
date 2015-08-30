@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.yahoo.serviceplushousefinder.R;
 import com.yahoo.serviceplushousefinder.adapters.ItemsArrayAdapter;
+import com.yahoo.serviceplushousefinder.helpers.EndlessScrollListener;
 import com.yahoo.serviceplushousefinder.models.Item;
 
 import org.apache.http.Header;
@@ -33,11 +35,13 @@ public class ListingFragment extends Fragment {
 
     private ArrayList<Item> items;
     private ItemsArrayAdapter itemsAdapter;
-    private SwipeRefreshLayout swipeContainer;
+    private ListView lvListing;
 
     private int mPage;
     private LayoutInflater inflater;
     private View rootView;
+    private ProgressBar progressBarFooter;
+    private SwipeRefreshLayout swipeContainer;
 
     public static ListingFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -66,22 +70,22 @@ public class ListingFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ListView lvListing = (ListView) rootView.findViewById(R.id.lvListing);
-        items = new ArrayList<>();
-        itemsAdapter = new ItemsArrayAdapter(getActivity(), items);
-        lvListing.setAdapter(itemsAdapter);
-        //client = RestApplication.getRestClient(); // singleton client
-        itemsAdapter.clear();
-
-        populateListing(1);
-/*
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+        lvListing = (ListView) rootView.findViewById(R.id.lvListing);
+        lvListing.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                populateTimeline(page);
+                populateListing(page);
             }
         });
 
+        setUpItemAdapter();
+        setUpSwipeAndRefreshLayout();
+        setUpProgressBar();
+        populateListing(1);
+
+    }
+
+    private void setUpSwipeAndRefreshLayout() {
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -90,21 +94,44 @@ public class ListingFragment extends Fragment {
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                tweetAdapter.clear();
-                populateTimeline(1);
+                itemsAdapter.clear();
+                populateListing(0);
             }
         });
         // Configure the refreshing colors
+
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-                */
+
+    }
+
+    private void setUpItemAdapter() {
+
+        items = new ArrayList<>();
+        itemsAdapter = new ItemsArrayAdapter(getActivity(), items);
+        lvListing.setAdapter(itemsAdapter);
+        //client = RestApplication.getRestClient(); // singleton client
+        itemsAdapter.clear();
     }
 
     private void populateListing(int i) {
-        String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%22https%3A%2F%2Fwww.dropbox.com%2Fs%2Fnjnfgjlg40kam78%2Fqrs10.xml%3Fdl%3D1%22%20and%20itemPath%20%3D%20%22result.hit%22&format=json&callback=";
 
+        if (i == 0) {
+            // remove dulicated progress indicator when pullRefresh
+            hideProgressBar();
+            //Log.d("DEBUG", "hideProgressBar");
+            i = 1;
+        } else {
+            if (swipeContainer.isRefreshing()) {
+                // prevent from duplicated fetch
+                return;
+            }
+            showProgressBar();
+            //Log.d("DEBUG", "showProgressBar");
+        }
+        String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%22https%3A%2F%2Fwww.dropbox.com%2Fs%2Fnjnfgjlg40kam78%2Fqrs10.xml%3Fdl%3D1%22%20and%20itemPath%20%3D%20%22result.hit%22&format=json&callback=";
         // /https://www.dropbox.com/s/njnfgjlg40kam78/qrs10.xml?dl=1";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, null, new JsonHttpResponseHandler() {
@@ -114,14 +141,14 @@ public class ListingFragment extends Fragment {
                         // parse data and save into adapter
                         handleListingResponse(response);
                         //Log.d("success", "number of listing: " + response.length());
-                        //hideProgressBar();
+                        hideProgressBar();
                     }
 
                     // FAILURE
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         Log.e("fail", "get listing API failed, " + errorResponse.toString());
-                        //hideProgressBar();
+                        hideProgressBar();
                     }
                 }
 
@@ -134,7 +161,27 @@ public class ListingFragment extends Fragment {
         itemsAdapter.notifyDataSetChanged();
 
         // Now we call setRefreshing(false) to signal refresh has finished
-        //swipeContainer.setRefreshing(false);
+        swipeContainer.setRefreshing(false);
+
+    }
+
+
+    private void setUpProgressBar() {
+        // Inflate the footer
+        View footer = inflater.inflate(
+                R.layout.footer_progress, null);
+        // Find the progressbar within footer
+        progressBarFooter = (ProgressBar) footer.findViewById(R.id.pbFooterLoading);
+        // Add footer to ListView before setting adapter
+        lvListing.addFooterView(footer);
+    }
+
+    private void showProgressBar() {
+        progressBarFooter.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar() {
+        progressBarFooter.setVisibility(View.GONE);
     }
 
     public interface OnFragmentInteractionListener {

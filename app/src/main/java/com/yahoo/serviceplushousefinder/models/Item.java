@@ -154,13 +154,13 @@ public class Item implements Parcelable {
         try {
 
             JSONObject query = json.getJSONObject("query");
-            Log.d("query", query.toString());
+            //Log.d("query", query.toString());
             JSONObject results = query.getJSONObject("results");
             JSONArray jsonHits = results.getJSONArray("hit");
             for(int i =0; i< jsonHits.length(); i++){
                 JSONArray fieldJson = jsonHits.getJSONObject(i).getJSONArray("field");
                 Item item = Item.fromJSON(fieldJson);
-                Log.d("item", item.getTitle());
+                //Log.d("item", item.getTitle());
                 if (item != null){
                     items.add(item);
                 }
