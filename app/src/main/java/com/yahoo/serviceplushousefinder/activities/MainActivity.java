@@ -63,4 +63,10 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
         intent.putExtra("user", "user1");
         startActivity(intent);
     }
+
+    public void onClickMap(MenuItem item) {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra("user", "user1");
+        startActivity(intent);
+    }
 }

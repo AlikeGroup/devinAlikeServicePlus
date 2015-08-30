@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -147,6 +148,7 @@ public class ListingFragment extends Fragment {
                     // FAILURE
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Toast.makeText(getActivity(), "Error - Listing fetch fail", Toast.LENGTH_SHORT).show();
                         Log.e("fail", "get listing API failed, " + errorResponse.toString());
                         hideProgressBar();
                     }
