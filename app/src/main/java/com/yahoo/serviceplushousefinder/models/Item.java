@@ -22,6 +22,8 @@ public class Item implements Parcelable {
     private String price;
     private String descs;
     private String imageurl;
+    private String mobile;
+    private Long mTime;
 
     public String getId() {
         return id;
@@ -87,6 +89,22 @@ public class Item implements Parcelable {
         this.imageurl = imageurl;
     }
 
+    public String getContactMobile() {
+        return mobile;
+    }
+
+    public void setContactMobile(String mobile) {
+        this.mobile = mobile;
+    }
+    public void setmTime(Long mTime) {
+        this.mTime = mTime;
+    }
+
+    public Long getmTime() {
+
+        return mTime;
+    }
+
     public static Item fromJSON(JSONArray fieldArray) {
         Item item = new Item();
         String name;
@@ -128,6 +146,17 @@ public class Item implements Parcelable {
                             item.imageurl = "";
                         }
                         break;
+                    case "cust_data":
+                        if (hasContent) {
+                            String mobileJsonStr = fieldArray.getJSONObject(i).getString("content");
+                            item.mobile = getMobile(mobileJsonStr);
+                        } else {
+                            item.mobile = "";
+                        }
+                        break;
+                    case "mtime":
+                        item.mTime = fieldArray.getJSONObject(i).getLong("content");
+                        break;
                 }
                 //item.save(); // insert into sqllite
             } catch (JSONException e) {
@@ -147,6 +176,18 @@ public class Item implements Parcelable {
             Log.e("imgurl", "Could not parse malformed JSON: \"" + imageJsonStr + "\"");
         }
         return imgUrl;
+    }
+
+    private static String getMobile(String mobileJsonStr) {
+        String mobile = "";
+        try {
+            JSONObject obj = new JSONObject(mobileJsonStr);
+            mobile = obj.getString("contact_mobile");
+            //Log.d("imgurl", mobile);
+        } catch (Throwable t) {
+            Log.e("contact_mobile", "Could not parse malformed JSON: \"" + mobileJsonStr + "\"");
+        }
+        return mobile;
     }
 
     public static ArrayList<Item> fromJSONObject(JSONObject json){
@@ -186,6 +227,8 @@ public class Item implements Parcelable {
         out.writeString(descs);
         out.writeString(imageurl);
         out.writeInt(pageview);
+        out.writeString(mobile);
+        out.writeLong(mTime);
     }
 
     @Override
@@ -205,6 +248,8 @@ public class Item implements Parcelable {
         descs = in.readString();
         imageurl = in.readString();
         pageview = in.readInt();
+        mobile = in.readString();
+        mTime = in.readLong();
     }
 
     public Item() {

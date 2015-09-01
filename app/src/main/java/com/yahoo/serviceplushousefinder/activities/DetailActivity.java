@@ -1,13 +1,24 @@
 package com.yahoo.serviceplushousefinder.activities;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.yahoo.serviceplushousefinder.R;
 import com.yahoo.serviceplushousefinder.models.Item;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -20,8 +31,20 @@ public class DetailActivity extends ActionBarActivity {
 
         item = (Item) getIntent().getParcelableExtra("item");
 
+        ImageView ivMainPhoto = (ImageView) findViewById(R.id.ivMainPhoto);
+        Picasso.with(this).load(item.getImageurl()).into(ivMainPhoto);
         TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(item.getTitle());
+        TextView tvMid = (TextView) findViewById(R.id.tvMid);
+        tvMid.setText("物件編號: 1" + item.getId());
+        TextView tvModifyTime = (TextView) findViewById(R.id.tvModifyTime);
+        tvModifyTime.setText("更新時間: " + getDate(item.getmTime()));
+        Button btnPhone = (Button) findViewById(R.id.btnPhone);
+        btnPhone.setText(item.getContactMobile());
+        WebView wvDesc = (WebView) findViewById(R.id.wvDesc);
+        wvDesc.getSettings().setBuiltInZoomControls(true);
+        wvDesc.getSettings().setJavaScriptEnabled(true);
+        wvDesc.loadDataWithBaseURL(null, item.getDescs(), "text/html", "UTF-8", null);
 
     }
 
@@ -45,5 +68,21 @@ public class DetailActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private String getDate(long time) {
+        System.out.println(time);
+        Calendar cal = Calendar.getInstance(Locale.TAIWAN);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("yyyy年MM月dd日", cal).toString();
+        return date;
+    }
+
+    public void goDail(View v){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_CALL);
+        Uri uri = Uri.parse("tel:" + item.getContactMobile());
+        intent.setData(uri);
+        startActivity(intent);
     }
 }
