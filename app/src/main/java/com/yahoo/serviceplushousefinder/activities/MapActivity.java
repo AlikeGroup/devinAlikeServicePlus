@@ -42,6 +42,10 @@ public class MapActivity extends AppCompatActivity implements
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
 
+    private String myLatitude = "";
+    private String myLongitude = "";
+    private ListingFragment fragmentListing;
+
     /*
      * Define a request code to send to Google Play services This code is
      * returned in Activity.onActivityResult
@@ -65,9 +69,10 @@ public class MapActivity extends AppCompatActivity implements
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
+        fragmentListing = ListingFragment.newInstance(1);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.flMapListing, ListingFragment.newInstance(1));
+        fragmentTransaction.replace(R.id.flMapListing, fragmentListing);
         fragmentTransaction.commit();
 
     }
@@ -85,21 +90,55 @@ public class MapActivity extends AppCompatActivity implements
                     // Make a web call for the locations
                     //Toast.makeText(getApplicationContext(), "onCameraChange "+cameraPosition.target.toString(), Toast.LENGTH_SHORT).show();
 
-                    Log.d("Debug", cameraPosition.toString());
+                    Log.d("Debug", "onCameraChange:"+cameraPosition.toString());
+
+                    if (myLatitude.isEmpty() ||
+                            Double.parseDouble(myLatitude) == cameraPosition.target.latitude ||
+                            0.0 == cameraPosition.target.latitude) {
+                        Log.d("DEBUG", "skip fetch by map");
+                        return; // skip init fetch
+                    }
+
+                    fragmentListing.searchGEO(Double.toString(cameraPosition.target.latitude),
+                            Double.toString(cameraPosition.target.longitude),
+                            Math.round(cameraPosition.zoom),
+                            1);
                     /*
+                    ArrayList<Item> items = fragmentListing.searchGEO(Double.toString(cameraPosition.target.latitude),
+                            Double.toString(cameraPosition.target.longitude),
+                            Math.round(cameraPosition.zoom),
+                            1);
+
                     // Use green marker icon
                     BitmapDescriptor defaultMarker =
                             BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
 // listingPosition is a LatLng point
-                    LatLng listingPosition = new LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude);
+                    LatLng mLatLng;
+
+
+                    for (int i = 0; i < 5; i++) {
+                        //Log.d("ListingLoc", items.get(i).getLatlong());
+                        String latLongStr = items.get(i).getLatlong();
+                        String[] split = latLongStr.split(";");
+                        Double mLat = Double.parseDouble(split[0].substring(1)); // remove first
+                        Double mLong = Double.parseDouble(split[1].substring(1));
+                        mLatLng = new LatLng(mLat, mLong);
 // Create the marker on the fragment
+                        Marker mapMarker = map.addMarker(new MarkerOptions()
+                                .position(mLatLng)
+                                .title(items.get(i).getTitle())
+                                .snippet(items.get(i).getAddress())
+                                .icon(defaultMarker));
+
+                    }
+
 
                     Marker mapMarker = map.addMarker(new MarkerOptions()
                             .position(listingPosition)
                             .title("Some title here")
                             .snippet("Some description here")
                             .icon(defaultMarker));
-                            */
+*/
 
                 }
             });
@@ -228,12 +267,26 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     public void onLocationChanged(Location location) {
+        if (myLatitude.isEmpty()) {
+            myLatitude = Double.toString(location.getLatitude());
+            myLongitude = Double.toString(location.getLongitude());
+        }
+
+        if (!myLatitude.isEmpty() &&
+                Double.parseDouble(myLatitude) == location.getLatitude()) {
+            // skip the same loc
+            return;
+        }
+
+        //Log.d("DEBUG", "onLocationChanged");
         // Report to the UI that the location was updated
-        String msg = "X Updated Location: " +
+        String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
+        myLatitude = Double.toString(location.getLatitude());
+        myLongitude = Double.toString(location.getLongitude());
     }
 
     /*

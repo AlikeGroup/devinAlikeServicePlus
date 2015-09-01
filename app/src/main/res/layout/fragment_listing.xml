@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yahoo.serviceplushousefinder.activities.MainActivity">
+    tools:context="com.yahoo.serviceplushousefinder.activities.MainActivity"
+    android:id="@+id/fragment_listing">
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,6 +26,9 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:choiceMode="none"
+            android:focusable="true"
+            android:fadeScrollbars="false"
             />
 
     </android.support.v4.widget.SwipeRefreshLayout>

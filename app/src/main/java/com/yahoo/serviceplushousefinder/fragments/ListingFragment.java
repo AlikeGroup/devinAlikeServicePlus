@@ -132,8 +132,13 @@ public class ListingFragment extends Fragment {
             showProgressBar();
             //Log.d("DEBUG", "showProgressBar");
         }
-        String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%22https%3A%2F%2Fwww.dropbox.com%2Fs%2Fnjnfgjlg40kam78%2Fqrs10.xml%3Fdl%3D1%22%20and%20itemPath%20%3D%20%22result.hit%22&format=json&callback=";
+        // buy_map
+        String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%22https%3A%2F%2Fwww.dropbox.com%2Fs%2F6xz4gnc060w2x5h%2Fbuy_map20.xml%3Fdl%3D1%22%20and%20itemPath%20%3D%20%22result.hit%22&format=json&callback=";
+
+        // listing10
+        //String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%22https%3A%2F%2Fwww.dropbox.com%2Fs%2Fnjnfgjlg40kam78%2Fqrs10.xml%3Fdl%3D1%22%20and%20itemPath%20%3D%20%22result.hit%22&format=json&callback=";
         // /https://www.dropbox.com/s/njnfgjlg40kam78/qrs10.xml?dl=1";
+
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, null, new JsonHttpResponseHandler() {
                     // SUCCESS
@@ -158,12 +163,14 @@ public class ListingFragment extends Fragment {
     }
 
     private void handleListingResponse(JSONObject json) {
-        ArrayList<Item> items = Item.fromJSONObject(json);
+        items = Item.fromJSONObject(json);
         itemsAdapter.addAll(items);
         itemsAdapter.notifyDataSetChanged();
 
         // Now we call setRefreshing(false) to signal refresh has finished
         swipeContainer.setRefreshing(false);
+
+        //lvListing.setSelection(3);
 
     }
 
@@ -187,5 +194,11 @@ public class ListingFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
+    }
+
+    public void searchGEO(String lattitude, String longitude, int zoom, int page) {
+        // do something in fragment
+        itemsAdapter.clear();
+        populateListing(page);
     }
 }
