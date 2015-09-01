@@ -1,5 +1,6 @@
 package com.yahoo.serviceplushousefinder.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,13 +27,15 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ListingFragment.OnFragmentInteractionListener} interface
+ * {@link ListingFragment.OnItemLoadedListener} interface
  * to handle interaction events.
  * Use the {@link ListingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ListingFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
+
+    private OnItemLoadedListener listener;
 
     private ArrayList<Item> items;
     private ItemsArrayAdapter itemsAdapter;
@@ -43,6 +46,8 @@ public class ListingFragment extends Fragment {
     private View rootView;
     private ProgressBar progressBarFooter;
     private SwipeRefreshLayout swipeContainer;
+
+    private Boolean isMapSearching = false;
 
     public static ListingFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -148,6 +153,8 @@ public class ListingFragment extends Fragment {
                         handleListingResponse(response);
                         //Log.d("success", "number of listing: " + response.length());
                         hideProgressBar();
+                        isMapSearching = false;
+
                     }
 
                     // FAILURE
@@ -156,6 +163,8 @@ public class ListingFragment extends Fragment {
                         Toast.makeText(getActivity(), "Error - Listing fetch fail", Toast.LENGTH_SHORT).show();
                         Log.e("fail", "get listing API failed, " + errorResponse.toString());
                         hideProgressBar();
+                        isMapSearching = false;
+
                     }
                 }
 
@@ -171,6 +180,7 @@ public class ListingFragment extends Fragment {
         swipeContainer.setRefreshing(false);
 
         //lvListing.setSelection(3);
+        listener.refreshMapMarker(items);
 
     }
 
@@ -193,12 +203,30 @@ public class ListingFragment extends Fragment {
         progressBarFooter.setVisibility(View.GONE);
     }
 
-    public interface OnFragmentInteractionListener {
+    public interface OnItemLoadedListener {
+        public void refreshMapMarker(ArrayList<Item> newItems);
+    }
+
+    // Store the listener (activity) that will have events fired once the fragment is attached
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnItemLoadedListener) {
+            listener = (OnItemLoadedListener) activity;
+        } else {
+            throw new ClassCastException(activity.toString()
+                    + " must implement MyListFragment.OnItemLoadedListener");
+        }
     }
 
     public void searchGEO(String lattitude, String longitude, int zoom, int page) {
         // do something in fragment
+        if (isMapSearching == true) {
+            return;
+        }
         itemsAdapter.clear();
+        isMapSearching = true;
         populateListing(page);
+
     }
 }

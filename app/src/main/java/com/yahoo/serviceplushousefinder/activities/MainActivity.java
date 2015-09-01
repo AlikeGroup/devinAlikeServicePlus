@@ -11,9 +11,12 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.yahoo.serviceplushousefinder.R;
 import com.yahoo.serviceplushousefinder.adapters.ListingFragmentPagerAdapter;
 import com.yahoo.serviceplushousefinder.fragments.ListingFragment;
+import com.yahoo.serviceplushousefinder.models.Item;
+
+import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity implements ListingFragment.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity implements ListingFragment.OnItemLoadedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,5 +71,10 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra("user", "user1");
         startActivity(intent);
+    }
+
+    @Override
+    public void refreshMapMarker(ArrayList<Item> newItems) {
+        return;
     }
 }
