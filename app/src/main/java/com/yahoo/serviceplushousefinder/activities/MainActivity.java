@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -66,7 +67,7 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
     public void onClickProfile(MenuItem item) {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra("user", "user1");
-        startActivity(intent);
+        startActivityForResult(intent,3458,null);
     }
 
     public void onClickMap(MenuItem item) {
@@ -77,8 +78,15 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
 
     protected void onActivityResult(int requestCode, int resultCode, Intent it) {
         if (resultCode == RESULT_OK) {
-            SearchFilter filter = (SearchFilter) it.getParcelableExtra("filter");
+            if (requestCode == 2888){
+                SearchFilter filter = (SearchFilter) it.getParcelableExtra("filter");
+                Log.e("filterFromSetting", filter.toString());
 
+            }
+            if (requestCode == 3458){
+                SearchFilter filter = (SearchFilter) it.getParcelableExtra("filter");
+                Log.e("filterFromProfile", filter.toString());
+            }
             //List<SearchFilter> data = new Select().from(SearchFilter.class).execute();
         }
     }

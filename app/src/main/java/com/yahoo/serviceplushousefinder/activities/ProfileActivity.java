@@ -1,10 +1,12 @@
 package com.yahoo.serviceplushousefinder.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.activeandroid.query.Select;
@@ -15,7 +17,7 @@ import com.yahoo.serviceplushousefinder.models.SearchFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileActivity extends ActionBarActivity {
+public class ProfileActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
 
     private ArrayList<SearchFilter> filter;
     private SearchFilterArrayAdapter filterAdapter;
@@ -31,6 +33,7 @@ public class ProfileActivity extends ActionBarActivity {
         List<SearchFilter> data = new Select().from(SearchFilter.class).execute();
         filterAdapter.addAll(data);
         filterAdapter.notifyDataSetChanged();
+        lvFilter.setOnItemClickListener(this);
     }
 
     @Override
@@ -67,5 +70,14 @@ public class ProfileActivity extends ActionBarActivity {
         lvFilter.setAdapter(filterAdapter);
         //client = RestApplication.getRestClient(); // singleton client
         filterAdapter.clear();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent it = new Intent();
+        SearchFilter searchFilter = filter.get(position);
+        it.putExtra("filter", searchFilter);
+        setResult(RESULT_OK, it);
+        finish();
     }
 }
