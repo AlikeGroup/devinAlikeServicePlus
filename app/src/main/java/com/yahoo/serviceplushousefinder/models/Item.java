@@ -105,64 +105,26 @@ public class Item implements Parcelable {
         return mTime;
     }
 
-    public static Item fromJSON(JSONArray fieldArray) {
+    public static Item fromJSON(JSONObject jsonObject) {
         Item item = new Item();
-        String name;
-        for(int i =0; i< fieldArray.length(); i++) {
-            try {
-                Boolean hasContent = fieldArray.getJSONObject(i).has("content");
-                name = fieldArray.getJSONObject(i).getString("name");
-                switch (name) {
-                    case "mid":
-                        item.id = fieldArray.getJSONObject(i).getString("content");
-                        break;
-                    case "title":
-                        item.title = fieldArray.getJSONObject(i).getString("content");
-                        break;
-                    case "location":
-                        item.address = fieldArray.getJSONObject(i).getString("content");
-                        break;
-                    case "latlong":
-                        if (hasContent) {
-                            item.latlong = fieldArray.getJSONObject(i).getString("content");
-                        } else {
-                            item.latlong = "";
-                        }
-                        break;
-                    case "pageview":
-                        item.pageview = fieldArray.getJSONObject(i).getInt("content");
-                        break;
-                    case "price":
-                        item.price = fieldArray.getJSONObject(i).getString("content");
-                        break;
-                    case "descs":
-                        item.descs = fieldArray.getJSONObject(i).getString("content");
-                        break;
-                    case "images":
-                        if (hasContent) {
-                            String imageJsonStr = fieldArray.getJSONObject(i).getString("content");
-                            item.imageurl = getImageUrl(imageJsonStr);
-                        } else {
-                            item.imageurl = "";
-                        }
-                        break;
-                    case "cust_data":
-                        if (hasContent) {
-                            String mobileJsonStr = fieldArray.getJSONObject(i).getString("content");
-                            item.mobile = getMobile(mobileJsonStr);
-                        } else {
-                            item.mobile = "";
-                        }
-                        break;
-                    case "mtime":
-                        item.mTime = fieldArray.getJSONObject(i).getLong("content");
-                        break;
-                }
-                //item.save(); // insert into sqllite
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        try {
+            item.id = jsonObject.getString("mid");
+            item.title = jsonObject.getString("title");
+            item.address = jsonObject.getString("location");
+            item.latlong = jsonObject.getString("latlong");
+            item.pageview = jsonObject.getInt("page_view");
+            item.price = jsonObject.getString("price");
+            item.descs = jsonObject.getString("descs");
+            item.mTime = jsonObject.getLong("mtime");
+            String imageJsonStr = jsonObject.getString("images");
+            item.imageurl = getImageUrl(imageJsonStr);
+            String mobileJsonStr = jsonObject.getString("cust_data");
+            item.mobile = getMobile(mobileJsonStr);
+            //item.save(); // insert into sqllite
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
         return item;
     }
 
@@ -194,12 +156,9 @@ public class Item implements Parcelable {
         ArrayList<Item> items = new ArrayList<>();
         try {
 
-            JSONObject query = json.getJSONObject("query");
-            //Log.d("query", query.toString());
-            JSONObject results = query.getJSONObject("results");
-            JSONArray jsonHits = results.getJSONArray("hit");
+            JSONArray jsonHits = json.getJSONArray("result");
             for(int i =0; i< jsonHits.length(); i++){
-                JSONArray fieldJson = jsonHits.getJSONObject(i).getJSONArray("field");
+                JSONObject fieldJson = jsonHits.getJSONObject(i);
                 Item item = Item.fromJSON(fieldJson);
                 //Log.d("item", item.getTitle());
                 if (item != null){
