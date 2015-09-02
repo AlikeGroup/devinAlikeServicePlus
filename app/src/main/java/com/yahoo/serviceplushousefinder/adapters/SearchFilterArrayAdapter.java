@@ -27,7 +27,7 @@ public class SearchFilterArrayAdapter extends ArrayAdapter<SearchFilter> {
         // Check if we are using a recycled view, if not we need to inflate
         if (convertView == null) {
             // create a new view from template
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_history, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.filter_history, parent, false);
         }
         // Lookup the views for populating the data (image, caption)
         TextView tvCity = (TextView) convertView.findViewById(R.id.tvCity);

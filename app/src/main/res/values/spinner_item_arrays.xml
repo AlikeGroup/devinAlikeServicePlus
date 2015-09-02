@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="city_array">
+        <item>台北市</item>
+        <item>新北市</item>
+        <item>桃園縣</item>
+    </string-array>
     <string-array name="buyorrent_array">
         <item>Buy</item>
         <item>Rent</item>

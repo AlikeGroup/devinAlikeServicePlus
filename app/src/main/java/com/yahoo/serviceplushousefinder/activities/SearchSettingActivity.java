@@ -20,7 +20,7 @@ public class SearchSettingActivity extends ActionBarActivity implements AdapterV
     Spinner spinnerBoR;
     Spinner spinnerRoom;
     Spinner spinnerAge;
-    EditText etCity;
+    Spinner spinnerCity;
     EditText etPositionX;
     EditText etPositionY;
 
@@ -30,7 +30,7 @@ public class SearchSettingActivity extends ActionBarActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_setting);
-        etCity = (EditText) findViewById(R.id.etCity);
+        spinnerCity = (Spinner) findViewById(R.id.spinnerCity);
         spinnerBoR = (Spinner) findViewById(R.id.spinnerBuyOrRent);
         spinnerPriceRange = (Spinner) findViewById(R.id.spinnerPriceRange);
         spinnerRoom = (Spinner) findViewById(R.id.spinnerRoom);
@@ -75,6 +75,14 @@ public class SearchSettingActivity extends ActionBarActivity implements AdapterV
 
     private void setDefault(){
         // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapterSpinnerCity = ArrayAdapter.createFromResource(this,
+                R.array.city_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapterSpinnerCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinnerCity.setAdapter(adapterSpinnerCity);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapterSpinnerBoR = ArrayAdapter.createFromResource(this,
                 R.array.buyorrent_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -103,7 +111,7 @@ public class SearchSettingActivity extends ActionBarActivity implements AdapterV
         SearchFilter filter = new SearchFilter();
         filter.setAgeRange(spinnerAge.getSelectedItemPosition());
         filter.setBuyOrRent(spinnerBoR.getSelectedItemPosition());
-        filter.setCity(etCity.getText().toString());
+        filter.setCity(spinnerCity.getSelectedItem().toString());
         filter.setPricaeRange(spinnerPriceRange.getSelectedItemPosition());
         filter.setRoomRange(spinnerRoom.getSelectedItemPosition());
         return filter;

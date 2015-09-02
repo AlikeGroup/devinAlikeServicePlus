@@ -311,7 +311,7 @@ public class MapActivity extends AppCompatActivity implements
 // listingPosition is a LatLng point
         LatLng mLatLng;
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < newItems.size(); i++) {
             //Log.d("ListingLoc", items.get(i).getLatlong());
             String latLongStr = newItems.get(i).getLatlong();
             String[] split = latLongStr.split(";");

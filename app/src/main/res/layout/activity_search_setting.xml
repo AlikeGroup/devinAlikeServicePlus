@@ -12,10 +12,11 @@
         android:text="City"
         android:id="@+id/tvCity" />
 
-    <EditText
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etCity" />
+        android:id="@+id/spinnerCity"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
