@@ -1,19 +1,36 @@
 package com.yahoo.serviceplushousefinder.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
+import com.activeandroid.query.Select;
 import com.yahoo.serviceplushousefinder.R;
+import com.yahoo.serviceplushousefinder.adapters.SearchFilterArrayAdapter;
+import com.yahoo.serviceplushousefinder.models.SearchFilter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileActivity extends ActionBarActivity {
+
+    private ArrayList<SearchFilter> filter;
+    private SearchFilterArrayAdapter filterAdapter;
+    private ListView lvFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        lvFilter = (ListView) findViewById(R.id.lvFilter);
+        setUpFilterAdapter();
+        List<SearchFilter> data = new Select().from(SearchFilter.class).execute();
+        filterAdapter.addAll(data);
+        filterAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -41,5 +58,14 @@ public class ProfileActivity extends ActionBarActivity {
     public void btnBackOnClick(View view) {
         setResult(RESULT_OK);
         finish();
+    }
+
+    private void setUpFilterAdapter() {
+
+        filter = new ArrayList<>();
+        filterAdapter = new SearchFilterArrayAdapter(this, filter);
+        lvFilter.setAdapter(filterAdapter);
+        //client = RestApplication.getRestClient(); // singleton client
+        filterAdapter.clear();
     }
 }
