@@ -18,6 +18,7 @@ import java.util.Locale;
 @Table(name = "SearchFilter")
 public class SearchFilter extends Model implements Parcelable {
     private String ageRangeText[] = new String[] {
+            "皆可",
             "10年以下",
             "11-20 年",
             "21-30 年",
@@ -27,6 +28,15 @@ public class SearchFilter extends Model implements Parcelable {
             "買屋",
             "租屋"
     };
+    private String roomText[] = new String[] {
+            "皆可",
+            "2房以下",
+            "2-3房",
+            "3-4房",
+            "4房以上"
+    };
+    private int roomMin[] = new int[] {0, 0, 2, 3, 4};
+    private int roomMax[] = new int[] {0, 2, 3, 4, 99};
     private String zone;//中山區
     private String positionX;//E121.472
     private String positionY;//N25.0323
@@ -68,6 +78,15 @@ public class SearchFilter extends Model implements Parcelable {
 
     public int getRoomRange() {
         return roomRange;
+    }
+    public String getRoomText() {
+        return roomText[getRoomRange()];
+    }
+    public int getRoomMin() {
+        return roomMin[getRoomRange()];
+    }
+    public  int getRoomMax() {
+        return roomMax[getRoomRange()];
     }
 
     public int getAgeRange() {

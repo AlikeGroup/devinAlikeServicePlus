@@ -36,10 +36,14 @@ public class SearchFilterArrayAdapter extends ArrayAdapter<SearchFilter> {
         TextView tvRoom = (TextView) convertView.findViewById(R.id.tvRoom);
         TextView tvAge = (TextView) convertView.findViewById(R.id.tvAge);
 
-        tvCity.setText(filter.getCity().toString());
+        if (filter.getCity().equals("")) {
+            tvCity.setText("All");
+        } else {
+            tvCity.setText(filter.getCity());
+        }
         tvBoR.setText(filter.getBuyOrRentText());
         tvPrice.setText(Integer.toString(filter.getPricaeRange()));
-        tvRoom.setText(Integer.toString(filter.getRoomRange()));
+        tvRoom.setText(filter.getRoomText());
         tvAge.setText(filter.getAgeText());
         return convertView;
     }
