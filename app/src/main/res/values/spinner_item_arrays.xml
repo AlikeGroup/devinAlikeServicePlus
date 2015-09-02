@@ -4,4 +4,37 @@
         <item>Buy</item>
         <item>Rent</item>
     </string-array>
+    <string-array name="rent_pricerange_array">
+        <item> 0 ~ 5,000</item>
+        <item>5,000 ~ 10,000</item>
+        <item>10,000 ~ 15,000</item>
+        <item>15,000 ~ 30,000</item>
+        <item>30,000 ~ 50,000</item>
+        <item>50,000 ~ 999,999,999</item>
+    </string-array>
+    <string-array name="buy_pricerange_array">
+        <item> 0 ~ 3,000,000</item>
+        <item>3,000,000 ~ 5,000,000</item>
+        <item>5,000,000 ~ 8,000,000</item>
+        <item>8,000,000 ~ 12,000,000</item>
+        <item>12,000,000 ~ 20,000,000</item>
+        <item>20,000,000 ~ 999,999,999</item>
+    </string-array>
+    <string-array name="roomrange_array">
+        <item> 1 </item>
+        <item> 2 </item>
+        <item> 3 </item>
+        <item> 4 </item>
+        <item> 5 </item>
+
+    </string-array>
+    <string-array name="agerange_array">
+        <item> 0 ~ 5 </item>
+        <item> 5 ~ 10 </item>
+        <item> 10 ~ 15 </item>
+        <item> 15 ~ 20 </item>
+        <item> 20 ~ 25 </item>
+        <item> 25 ~ 30 </item>
+        <item> 30 ~ 99 </item>
+    </string-array>
 </resources>

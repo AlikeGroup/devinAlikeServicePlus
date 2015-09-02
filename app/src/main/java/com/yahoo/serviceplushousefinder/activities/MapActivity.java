@@ -24,16 +24,23 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.yahoo.serviceplushousefinder.R;
 import com.yahoo.serviceplushousefinder.fragments.ListingFragment;
+import com.yahoo.serviceplushousefinder.models.Item;
+
+import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener,
+        ListingFragment.OnItemLoadedListener{
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -44,6 +51,7 @@ public class MapActivity extends AppCompatActivity implements
 
     private String myLatitude = "";
     private String myLongitude = "";
+    private Double myCameraLat = 0.0;
     private ListingFragment fragmentListing;
 
     /*
@@ -96,6 +104,7 @@ public class MapActivity extends AppCompatActivity implements
                             Double.parseDouble(myLatitude) == cameraPosition.target.latitude ||
                             0.0 == cameraPosition.target.latitude) {
                         Log.d("DEBUG", "skip fetch by map");
+                        myCameraLat = cameraPosition.target.latitude;
                         return; // skip init fetch
                     }
 
@@ -103,42 +112,6 @@ public class MapActivity extends AppCompatActivity implements
                             Double.toString(cameraPosition.target.longitude),
                             Math.round(cameraPosition.zoom),
                             1);
-                    /*
-                    ArrayList<Item> items = fragmentListing.searchGEO(Double.toString(cameraPosition.target.latitude),
-                            Double.toString(cameraPosition.target.longitude),
-                            Math.round(cameraPosition.zoom),
-                            1);
-
-                    // Use green marker icon
-                    BitmapDescriptor defaultMarker =
-                            BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
-// listingPosition is a LatLng point
-                    LatLng mLatLng;
-
-
-                    for (int i = 0; i < 5; i++) {
-                        //Log.d("ListingLoc", items.get(i).getLatlong());
-                        String latLongStr = items.get(i).getLatlong();
-                        String[] split = latLongStr.split(";");
-                        Double mLat = Double.parseDouble(split[0].substring(1)); // remove first
-                        Double mLong = Double.parseDouble(split[1].substring(1));
-                        mLatLng = new LatLng(mLat, mLong);
-// Create the marker on the fragment
-                        Marker mapMarker = map.addMarker(new MarkerOptions()
-                                .position(mLatLng)
-                                .title(items.get(i).getTitle())
-                                .snippet(items.get(i).getAddress())
-                                .icon(defaultMarker));
-
-                    }
-
-
-                    Marker mapMarker = map.addMarker(new MarkerOptions()
-                            .position(listingPosition)
-                            .title("Some title here")
-                            .snippet("Some description here")
-                            .icon(defaultMarker));
-*/
 
                 }
             });
@@ -249,7 +222,7 @@ public class MapActivity extends AppCompatActivity implements
         if (location != null) {
             Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14);
             map.animateCamera(cameraUpdate);
             startLocationUpdates();
         } else {
@@ -270,10 +243,10 @@ public class MapActivity extends AppCompatActivity implements
         if (myLatitude.isEmpty()) {
             myLatitude = Double.toString(location.getLatitude());
             myLongitude = Double.toString(location.getLongitude());
+            return; // skip init
         }
 
-        if (!myLatitude.isEmpty() &&
-                Double.parseDouble(myLatitude) == location.getLatitude()) {
+        if (Double.parseDouble(myLatitude) == location.getLatitude()) {
             // skip the same loc
             return;
         }
@@ -328,6 +301,30 @@ public class MapActivity extends AppCompatActivity implements
         } else {
             Toast.makeText(getApplicationContext(),
                     "Sorry. Location services not available to you", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void refreshMapMarker(ArrayList<Item> newItems) {
+        BitmapDescriptor defaultMarker =
+                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+// listingPosition is a LatLng point
+        LatLng mLatLng;
+
+        for (int i = 0; i < 5; i++) {
+            //Log.d("ListingLoc", items.get(i).getLatlong());
+            String latLongStr = newItems.get(i).getLatlong();
+            String[] split = latLongStr.split(";");
+            Double mLat = Double.parseDouble(split[0].substring(1)); // remove first
+            Double mLong = Double.parseDouble(split[1].substring(1));
+            mLatLng = new LatLng(mLat, mLong);
+// Create the marker on the fragment
+            Marker mapMarker = map.addMarker(new MarkerOptions()
+                    .position(mLatLng)
+                    .title(newItems.get(i).getTitle())
+                    .snippet(newItems.get(i).getAddress())
+                    .icon(defaultMarker));
+
         }
     }
 
