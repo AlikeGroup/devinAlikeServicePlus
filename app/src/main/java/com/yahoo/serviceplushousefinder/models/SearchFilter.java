@@ -23,6 +23,10 @@ public class SearchFilter extends Model implements Parcelable {
             "21-30 年",
             "超過30年"
     };
+    private String buyOrRentText[] = new String[] {
+            "買屋",
+            "租屋"
+    };
     private String zone;//中山區
     private String positionX;//E121.472
     private String positionY;//N25.0323
@@ -50,6 +54,9 @@ public class SearchFilter extends Model implements Parcelable {
     public int getBuyOrRent() {
         return buyOrRent;
     }
+    public String getBuyOrRentText() {
+        return buyOrRentText[getBuyOrRent()];
+    }
 
     public String getPositionX() {
         return positionX;
@@ -65,6 +72,9 @@ public class SearchFilter extends Model implements Parcelable {
 
     public int getAgeRange() {
         return ageRange;
+    }
+    public String getAgeText() {
+        return ageRangeText[getAgeRange()];
     }
 
     public int getAreaRange() {
@@ -170,6 +180,8 @@ public class SearchFilter extends Model implements Parcelable {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
+
 
 
 }

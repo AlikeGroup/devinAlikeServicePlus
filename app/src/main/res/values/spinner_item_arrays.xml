@@ -3,7 +3,9 @@
     <string-array name="city_array">
         <item>台北市</item>
         <item>新北市</item>
-        <item>桃園縣</item>
+        <item>桃園市</item>
+        <item>台中市</item>
+        <item>高雄市</item>
     </string-array>
     <string-array name="buyorrent_array">
         <item>Buy</item>
@@ -34,12 +36,9 @@
 
     </string-array>
     <string-array name="agerange_array">
-        <item> 0 ~ 5 </item>
-        <item> 5 ~ 10 </item>
-        <item> 10 ~ 15 </item>
-        <item> 15 ~ 20 </item>
-        <item> 20 ~ 25 </item>
-        <item> 25 ~ 30 </item>
+        <item> 0 ~ 10</item>
+        <item> 10 ~ 20 </item>
+        <item> 20 ~ 30 </item>
         <item> 30 ~ 99 </item>
     </string-array>
 </resources>

@@ -148,11 +148,13 @@ public class ListingFragment extends Fragment {
         if (i == 1) {
             pagination = 1; // reset
         }
-        String url = "http://f0.adp.tw1.yahoo.com/garden/alike?type=buy&"
+        String url = "http://f0.adp.tw1.yahoo.com/garden/alike?"
                 +"sort="+mPage
                 +"&offset="+String.valueOf((i-1)*10);
         SharedPreferences pref =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String type = pref.getString("type", "buy");
+        url = url+"&type="+type;
         String city = pref.getString("city", "");
         if (!city.equals("")) {
             url = url+"&city="+city;
@@ -161,7 +163,6 @@ public class ListingFragment extends Fragment {
         String x2 = pref.getString("x2", "0.0");
         if (!x1.equals("0.0")) {
             url = url+"&x1="+x1+"&x2="+x2;
-
         }
 
         // buy_map
@@ -261,6 +262,12 @@ public class ListingFragment extends Fragment {
         SharedPreferences.Editor edit = pref.edit();
         edit.putString("x1", lattitude);
         edit.putString("x2", longitude);
+        edit.putString("city", filter.getCity());
+        if (filter.getBuyOrRent() == 0) {
+            edit.putString("type", "buy");
+        } else {
+            edit.putString("type", "rent");
+        }
         edit.commit();
 
         populateListing(page);

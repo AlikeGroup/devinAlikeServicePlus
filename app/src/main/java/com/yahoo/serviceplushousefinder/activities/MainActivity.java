@@ -1,9 +1,7 @@
 package com.yahoo.serviceplushousefinder.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -94,12 +92,6 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
                 SearchFilter filter = (SearchFilter) it.getParcelableExtra("filter");
                 Log.e("filterFromSetting", filter.toString());
 
-                SharedPreferences pref =
-                        PreferenceManager.getDefaultSharedPreferences(this);
-                SharedPreferences.Editor edit = pref.edit();
-                edit.putString("city", filter.getCity());
-                edit.commit();
-
                 //setSearchFilter(filter);
                 Log.d("vPager.getCurrentItem", String.valueOf(vPager.getCurrentItem()));
 
@@ -114,12 +106,6 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
             if (requestCode == 3458){
                 SearchFilter filter = (SearchFilter) it.getParcelableExtra("filter");
                 Log.e("filterFromProfile", filter.toString());
-
-                SharedPreferences pref =
-                        PreferenceManager.getDefaultSharedPreferences(this);
-                SharedPreferences.Editor edit = pref.edit();
-                edit.putString("city", filter.getCity());
-                edit.commit();
 
                 //setSearchFilter(filter);
                 Log.d("vPager.getCurrentItem", String.valueOf(vPager.getCurrentItem()));
