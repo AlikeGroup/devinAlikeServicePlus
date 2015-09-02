@@ -55,6 +55,10 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         tvTitle.setText(item.getTitle());
         TextView tvAddress = (TextView) convertView.findViewById(R.id.tvAddress);
         tvAddress.setText(item.getAddress());
+        TextView tvPrice = (TextView) convertView.findViewById(R.id.tvPrice);
+        tvPrice.setText(item.getPrice());
+        TextView tvPageview = (TextView) convertView.findViewById(R.id.tvPageview);
+        tvPageview.setText(String.valueOf(item.getPageview()));
 
         final RelativeLayout rlTweetCard = (RelativeLayout) convertView.findViewById(R.id.rlListingItem);
         rlTweetCard.setOnClickListener(new View.OnClickListener() {

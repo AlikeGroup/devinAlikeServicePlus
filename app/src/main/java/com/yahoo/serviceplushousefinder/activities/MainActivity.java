@@ -1,7 +1,9 @@
 package com.yahoo.serviceplushousefinder.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -20,6 +22,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements ListingFragment.OnItemLoadedListener {
 
+    private SearchFilter searchFilter;
+    private int tab;
+    private ListingFragmentPagerAdapter lfpAdapter;
+    private ViewPager vPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +34,17 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
 
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
-        vPager.setAdapter(new ListingFragmentPagerAdapter(getSupportFragmentManager(), this));
+        vPager = (ViewPager) findViewById(R.id.viewpager);
+        lfpAdapter = new ListingFragmentPagerAdapter(getSupportFragmentManager(), this);
+        vPager.setAdapter(lfpAdapter);
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(vPager);
+
+
+        setSearchFilter(new SearchFilter());
+
     }
 
     @Override
@@ -82,6 +94,22 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
                 SearchFilter filter = (SearchFilter) it.getParcelableExtra("filter");
                 Log.e("filterFromSetting", filter.toString());
 
+                SharedPreferences pref =
+                        PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString("city", filter.getCity());
+                edit.commit();
+
+                //setSearchFilter(filter);
+                Log.d("vPager.getCurrentItem", String.valueOf(vPager.getCurrentItem()));
+
+                ListingFragment lFragment = lfpAdapter.getFragmentInstanceByTab(vPager.getCurrentItem());
+                lFragment.searchGEO("0.0",
+                        "0.0",
+                        14,
+                        1,
+                        filter);
+
             }
             if (requestCode == 3458){
                 SearchFilter filter = (SearchFilter) it.getParcelableExtra("filter");
@@ -94,5 +122,21 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
     @Override
     public void refreshMapMarker(ArrayList<Item> newItems) {
         return;
+    }
+
+    public SearchFilter getSearchFilter() {
+        return searchFilter;
+    }
+
+    public void setSearchFilter(SearchFilter searchFilter) {
+        this.searchFilter = searchFilter;
+    }
+
+    public int getTab() {
+        return tab;
+    }
+
+    public void setTab(int tab) {
+        this.tab = tab;
     }
 }

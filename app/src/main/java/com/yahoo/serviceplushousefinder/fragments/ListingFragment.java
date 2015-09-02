@@ -1,7 +1,9 @@
 package com.yahoo.serviceplushousefinder.fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -18,6 +20,7 @@ import com.yahoo.serviceplushousefinder.R;
 import com.yahoo.serviceplushousefinder.adapters.ItemsArrayAdapter;
 import com.yahoo.serviceplushousefinder.helpers.EndlessScrollListener;
 import com.yahoo.serviceplushousefinder.models.Item;
+import com.yahoo.serviceplushousefinder.models.SearchFilter;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -41,13 +44,15 @@ public class ListingFragment extends Fragment {
     private ItemsArrayAdapter itemsAdapter;
     private ListView lvListing;
 
-    private int mPage;
+    private int mPage; // tab
+    private int pagination = 1;
     private LayoutInflater inflater;
     private View rootView;
     private ProgressBar progressBarFooter;
     private SwipeRefreshLayout swipeContainer;
 
     private Boolean isMapSearching = false;
+    private SearchFilter filter;
 
     public static ListingFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -80,9 +85,12 @@ public class ListingFragment extends Fragment {
         lvListing.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                populateListing(page);
+                pagination++;
+                populateListing(pagination);
             }
         });
+
+        filter = new SearchFilter();
 
         setUpItemAdapter();
         setUpSwipeAndRefreshLayout();
@@ -137,7 +145,24 @@ public class ListingFragment extends Fragment {
             showProgressBar();
             //Log.d("DEBUG", "showProgressBar");
         }
-        String url = "http://f0.adp.tw1.yahoo.com/garden/alike?sdasd";
+        if (i == 1) {
+            pagination = 1; // reset
+        }
+        String url = "http://f0.adp.tw1.yahoo.com/garden/alike?type=buy&"
+                +"sort="+mPage
+                +"&offset="+String.valueOf((i-1)*10);
+        SharedPreferences pref =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String city = pref.getString("city", "");
+        if (!city.equals("")) {
+            url = url+"&city="+city;
+        }
+        String x1 = pref.getString("x1", "0.0");
+        String x2 = pref.getString("x2", "0.0");
+        if (!x1.equals("0.0")) {
+            url = url+"&x1="+x1+"&x2="+x2;
+
+        }
 
         // buy_map
         //String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%22https%3A%2F%2Fwww.dropbox.com%2Fs%2F6xz4gnc060w2x5h%2Fbuy_map20.xml%3Fdl%3D1%22%20and%20itemPath%20%3D%20%22result.hit%22&format=json&callback=";
@@ -146,6 +171,7 @@ public class ListingFragment extends Fragment {
         //String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%22https%3A%2F%2Fwww.dropbox.com%2Fs%2Fnjnfgjlg40kam78%2Fqrs10.xml%3Fdl%3D1%22%20and%20itemPath%20%3D%20%22result.hit%22&format=json&callback=";
         // /https://www.dropbox.com/s/njnfgjlg40kam78/qrs10.xml?dl=1";
 
+        Log.d("DEBUG", "url: "+url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, null, new JsonHttpResponseHandler() {
                     // SUCCESS
@@ -221,13 +247,22 @@ public class ListingFragment extends Fragment {
         }
     }
 
-    public void searchGEO(String lattitude, String longitude, int zoom, int page) {
+    public void searchGEO(String lattitude, String longitude, int zoom, int page, SearchFilter searchFilter) {
         // do something in fragment
         if (isMapSearching == true) {
             return;
         }
         itemsAdapter.clear();
         isMapSearching = true;
+
+        filter = searchFilter;
+        SharedPreferences pref =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString("x1", lattitude);
+        edit.putString("x2", longitude);
+        edit.commit();
+
         populateListing(page);
 
     }

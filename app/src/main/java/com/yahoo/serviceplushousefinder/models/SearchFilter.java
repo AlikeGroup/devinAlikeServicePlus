@@ -135,6 +135,7 @@ public class SearchFilter extends Model implements Parcelable {
 
     public SearchFilter(){
         super();
+        city = "";
     }
 
     public SearchFilter(String city, int buyOrRent, int price, int room, int age){

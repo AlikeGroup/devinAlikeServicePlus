@@ -14,6 +14,7 @@ public class ListingFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
     private String tabTitles[] = new String[] { "Price", "Area", "Time" };
     private Context context;
+    private ListingFragment[] fragments = new ListingFragment[] {null, null, null};
 
     public ListingFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -27,12 +28,19 @@ public class ListingFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ListingFragment.newInstance(position + 1);
+        ListingFragment lF = ListingFragment.newInstance(position + 1);
+        fragments[position] = lF;
+        return lF;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
         return tabTitles[position];
+    }
+
+    public ListingFragment getFragmentInstanceByTab(int tab) {
+        return fragments[tab];
+
     }
 }

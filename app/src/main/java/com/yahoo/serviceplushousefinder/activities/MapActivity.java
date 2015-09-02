@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.yahoo.serviceplushousefinder.R;
 import com.yahoo.serviceplushousefinder.fragments.ListingFragment;
 import com.yahoo.serviceplushousefinder.models.Item;
+import com.yahoo.serviceplushousefinder.models.SearchFilter;
 
 import java.util.ArrayList;
 
@@ -111,7 +112,8 @@ public class MapActivity extends AppCompatActivity implements
                     fragmentListing.searchGEO(Double.toString(cameraPosition.target.latitude),
                             Double.toString(cameraPosition.target.longitude),
                             Math.round(cameraPosition.zoom),
-                            1);
+                            1,
+                            new SearchFilter());
 
                 }
             });

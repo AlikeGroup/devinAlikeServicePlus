@@ -21,7 +21,9 @@
         android:id="@+id/tvTitle"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivHouseImage"
-        android:layout_toEndOf="@+id/ivHouseImage" />
+        android:layout_toEndOf="@+id/ivHouseImage"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,8 +34,50 @@
         android:layout_toRightOf="@+id/ivHouseImage"
         android:layout_toEndOf="@+id/ivHouseImage"
         android:autoLink="all"
-        android:linksClickable="true" />
+        android:linksClickable="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="價錢"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/tvAddress"
+        android:layout_toRightOf="@+id/ivHouseImage"
+        android:layout_toEndOf="@+id/ivHouseImage"
+        android:paddingRight="2dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="100"
+        android:id="@+id/tvPrice"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_toRightOf="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="熱度"
+        android:id="@+id/textView8"
+        android:layout_below="@+id/textView6"
+        android:layout_toRightOf="@+id/ivHouseImage"
+        android:layout_toEndOf="@+id/ivHouseImage"
+        android:paddingRight="2dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="5"
+        android:id="@+id/tvPageview"
+        android:layout_alignTop="@+id/textView8"
+        android:layout_toRightOf="@+id/textView8"
+        android:layout_toEndOf="@+id/textView8" />
 
 
 </RelativeLayout>
