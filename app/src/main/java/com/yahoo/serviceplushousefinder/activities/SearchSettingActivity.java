@@ -63,6 +63,7 @@ public class SearchSettingActivity extends ActionBarActivity implements AdapterV
     }
 
     public void btnSaveOnClick(View view) {
+        //ActiveAndroid.initialize(this);
         SearchFilter filter = getFilter();
         filter.save();
         Intent intent = new Intent();

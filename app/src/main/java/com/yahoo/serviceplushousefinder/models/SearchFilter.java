@@ -38,8 +38,6 @@ public class SearchFilter extends Model implements Parcelable {
     private int ageRange;
     @Column(name = "price")
     private int pricaeRange;
-    //@Column(name = "id")
-    //private int id;
 
     public String getCity() {
         return city;
@@ -136,7 +134,16 @@ public class SearchFilter extends Model implements Parcelable {
     }
 
     public SearchFilter(){
+        super();
+    }
 
+    public SearchFilter(String city, int buyOrRent, int price, int room, int age){
+        super();
+        this.city = city;
+        this.buyOrRent = buyOrRent;
+        this.pricaeRange = price;
+        this.roomRange = room;
+        this.ageRange = age;
     }
 
     public static final Parcelable.Creator<SearchFilter> CREATOR

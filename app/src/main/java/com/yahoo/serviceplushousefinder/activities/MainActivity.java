@@ -11,8 +11,8 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.yahoo.serviceplushousefinder.R;
 import com.yahoo.serviceplushousefinder.adapters.ListingFragmentPagerAdapter;
 import com.yahoo.serviceplushousefinder.fragments.ListingFragment;
-import com.yahoo.serviceplushousefinder.models.SearchFilter;
 import com.yahoo.serviceplushousefinder.models.Item;
+import com.yahoo.serviceplushousefinder.models.SearchFilter;
 
 import java.util.ArrayList;
 
@@ -78,6 +78,8 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
     protected void onActivityResult(int requestCode, int resultCode, Intent it) {
         if (resultCode == RESULT_OK) {
             SearchFilter filter = (SearchFilter) it.getParcelableExtra("filter");
+
+            //List<SearchFilter> data = new Select().from(SearchFilter.class).execute();
         }
     }
 
