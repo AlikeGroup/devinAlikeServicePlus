@@ -30,7 +30,7 @@ public class ProfileActivity extends ActionBarActivity implements AdapterView.On
 
         lvFilter = (ListView) findViewById(R.id.lvFilter);
         setUpFilterAdapter();
-        List<SearchFilter> data = new Select().from(SearchFilter.class).execute();
+        List<SearchFilter> data = new Select().from(SearchFilter.class).orderBy("Id DESC").execute();
         filterAdapter.addAll(data);
         filterAdapter.notifyDataSetChanged();
         lvFilter.setOnItemClickListener(this);

@@ -42,7 +42,7 @@ public class SearchFilterArrayAdapter extends ArrayAdapter<SearchFilter> {
             tvCity.setText(filter.getCity());
         }
         tvBoR.setText(filter.getBuyOrRentText());
-        tvPrice.setText(Integer.toString(filter.getPricaeRange()));
+        tvPrice.setText(filter.getPriceText());
         tvRoom.setText(filter.getRoomText());
         tvAge.setText(filter.getAgeText());
         return convertView;
