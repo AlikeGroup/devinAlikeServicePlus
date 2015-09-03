@@ -8,44 +8,29 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-* [ ] User can view stream of house information
-  * [ ] **tab (map view), and base on current location** (mobile-oriented features)
-  * [ ] tab (sort by price, sort by post time)
-  * [ ] filter by setting
-* [ ] User can view detail of house information
-  * [ ] User can view basic information of house (address, price, attribute)
-  * [ ] **User can dial directly to seller through phone number show in detail page** (mobile-oriented features)
-  * [ ] User can view photo of house
+* [X] User can view stream of house information
+  * [X] **map view, and base on current location** (mobile-oriented features)
+  * [X] tab (sort by price, sort by post time)
+  * [X] filter by setting
+* [X] User can view detail of house information
+  * [X] User can view basic information of house (address, price, attribute)
+  * [X] **User can dial directly to seller through phone number show in detail page** (mobile-oriented features)
+  * [X] User can view photo of house
   * [ ] User can view map of house
-* [ ] User can set search arguments in setting page
-  * [ ] User can search by price
-  * [ ] User can search by room number
-  * [ ] User can search by house age
-* [ ] User can view profile
+* [X] User can set search arguments in setting page
+  * [X] User can search by price
+  * [X] User can search by room number
+  * [X] User can search by house age
+* [X] User can view profile
   * [ ] User can edit search preference
-  * [ ] User can add search preference
+  * [X] User can add search preference
   * [ ] User can delete search preference
-
-## Concept wireframe
-
-List/Map view:
-<img src="http://www.android-app-patterns.com/img/sets/streams/twitter-stream-2.png" height="420" alt="Stream">
-<img src="http://www.android-app-patterns.com/img/sets/content-item/148_5_content-item.png" height="420" alt="Detail">
-
-Detail house info:
-<img src="http://www.android-app-patterns.com/img/screens/52935ea54ecfa.png" height="420" alt="Detail">
-
-Search setting:
-<img src="http://www.android-app-patterns.com/img/sets/settings/Pinterest_1_settings.png" height="420" alt="Profile">
-
-User profile:
-<img src="http://www.android-app-patterns.com/img/sets/profile-pages/Pinterest_4_profile-pages.png" height="420" alt="Profile">
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='' title='Video Walkthrough' width='300' alt='Video Walkthrough' />
+<img src='android_group.gif' title='Video Walkthrough' width='300' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

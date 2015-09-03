@@ -40,7 +40,7 @@ public class DetailActivity extends ActionBarActivity {
         TextView tvModifyTime = (TextView) findViewById(R.id.tvModifyTime);
         tvModifyTime.setText("更新時間: " + getDate(item.getmTime()));
         Button btnPhone = (Button) findViewById(R.id.btnPhone);
-        btnPhone.setText(item.getContactMobile());
+        btnPhone.setText("Call me: "+item.getContactMobile());
         WebView wvDesc = (WebView) findViewById(R.id.wvDesc);
         wvDesc.getSettings().setBuiltInZoomControls(true);
         wvDesc.getSettings().setJavaScriptEnabled(true);
