@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -66,7 +67,7 @@ public class Item implements Parcelable {
     }
 
     public String getPrice() {
-        return price;
+        return transPrice(price);
     }
 
     public void setPrice(String price) {
@@ -234,5 +235,10 @@ public class Item implements Parcelable {
             return new Item[size];
         }
     };
+
+    private String transPrice(String price){
+        BigDecimal c = new BigDecimal(price);
+        return c.toPlainString();
+    }
 
 }
