@@ -24,6 +24,8 @@ public class SearchFilter extends Model implements Parcelable {
             "21-30 年",
             "超過30年"
     };
+    private int ageMin[] = new int[] {0, 0, 11, 21, 31};
+    private int ageMax[] = new int[] {0, 10,20, 30, 99};
     private String buyOrRentText[] = new String[] {
             "買屋",
             "租屋"
@@ -37,6 +39,16 @@ public class SearchFilter extends Model implements Parcelable {
     };
     private int roomMin[] = new int[] {0, 0, 2, 3, 4};
     private int roomMax[] = new int[] {0, 2, 3, 4, 99};
+    private String priceText[] = new String[] {
+            "皆可",
+            "300萬以下",
+            "300萬-800萬",
+            "800萬-1200萬",
+            "1200萬-2000萬",
+            "2000萬以上",
+    };
+    private int priceMin[] = new int[] {0, 0,       3000000,  8000000, 12000000, 20000000};
+    private int priceMax[] = new int[] {0, 3000000, 8000000, 12000000, 20000000,999999999};
     private String zone;//中山區
     private String positionX;//E121.472
     private String positionY;//N25.0323
@@ -85,7 +97,7 @@ public class SearchFilter extends Model implements Parcelable {
     public int getRoomMin() {
         return roomMin[getRoomRange()];
     }
-    public  int getRoomMax() {
+    public int getRoomMax() {
         return roomMax[getRoomRange()];
     }
 
@@ -95,6 +107,13 @@ public class SearchFilter extends Model implements Parcelable {
     public String getAgeText() {
         return ageRangeText[getAgeRange()];
     }
+    public int getAgeMin() {
+        return ageMin[getAgeRange()];
+    }
+    public int getAgeMax() {
+        return ageMax[getAgeRange()];
+    }
+
 
     public int getAreaRange() {
         return areaRange;
@@ -102,6 +121,15 @@ public class SearchFilter extends Model implements Parcelable {
 
     public int getPricaeRange() {
         return pricaeRange;
+    }
+    public String getPriceText() {
+        return priceText[getPricaeRange()];
+    }
+    public int getPriceMin() {
+        return priceMin[getPricaeRange()];
+    }
+    public int getPriceMax() {
+        return priceMax[getPricaeRange()];
     }
 
     public void setCity(String city) {

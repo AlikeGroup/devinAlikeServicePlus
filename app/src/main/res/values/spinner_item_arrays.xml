@@ -21,12 +21,12 @@
         <item>50,000 ~ 999,999,999</item>
     </string-array>
     <string-array name="buy_pricerange_array">
-        <item> 0 ~ 3,000,000</item>
-        <item>3,000,000 ~ 5,000,000</item>
-        <item>5,000,000 ~ 8,000,000</item>
-        <item>8,000,000 ~ 12,000,000</item>
-        <item>12,000,000 ~ 20,000,000</item>
-        <item>20,000,000 ~ 999,999,999</item>
+        <item> All </item>
+        <item>300萬以下</item>
+        <item>300萬 ~ 800萬</item>
+        <item>800萬 ~ 1200萬</item>
+        <item>1200萬 ~ 2000萬</item>
+        <item>2000萬以上</item>
     </string-array>
     <string-array name="roomrange_array">
         <item> All </item>

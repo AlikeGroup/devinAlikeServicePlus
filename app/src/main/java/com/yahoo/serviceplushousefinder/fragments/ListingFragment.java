@@ -166,8 +166,18 @@ public class ListingFragment extends Fragment {
         }
         String r1 = pref.getString("r1", "0");
         String r2 = pref.getString("r2", "0");
-        if (!r1.equals("0") && !r2.equals("0")) {
+        if (!r1.equals("0") || !r2.equals("0")) {
             url = url+"&r1="+r1+"&r2="+r2;
+        }
+        String a1 = pref.getString("a1", "0");
+        String a2 = pref.getString("a2", "0");
+        if (!a1.equals("0") || !a2.equals("0")) {
+            url = url+"&a1="+a1+"&a2="+a2;
+        }
+        String p1 = pref.getString("p1", "0");
+        String p2 = pref.getString("p2", "0");
+        if (!p1.equals("0") || !p2.equals("0")) {
+            url = url+"&p1="+p1+"&p2="+p2;
         }
 
         // buy_map
@@ -275,6 +285,10 @@ public class ListingFragment extends Fragment {
         }
         edit.putString("r1", String.valueOf(filter.getRoomMin()));
         edit.putString("r2", String.valueOf(filter.getRoomMax()));
+        edit.putString("a1", String.valueOf(filter.getAgeMin()));
+        edit.putString("a2", String.valueOf(filter.getAgeMax()));
+        edit.putString("p1", String.valueOf(filter.getPriceMin()));
+        edit.putString("p2", String.valueOf(filter.getPriceMax()));
         edit.commit();
 
         populateListing(page);

@@ -20,6 +20,9 @@ public class Item implements Parcelable {
     private String address;
     private String latlong;
     private int pageview;
+    private int age;
+    private int area;
+    private int room;
     private String price;
     private String descs;
     private String imageurl;
@@ -114,6 +117,9 @@ public class Item implements Parcelable {
             item.address = jsonObject.getString("location");
             item.latlong = jsonObject.getString("latlong");
             item.pageview = jsonObject.getInt("page_view");
+            item.room = jsonObject.getInt("range_data1");
+            item.age = jsonObject.getInt("range_data2");
+            item.area = jsonObject.getInt("range_data3");
             item.price = jsonObject.getString("price");
             item.descs = jsonObject.getString("descs");
             item.mTime = jsonObject.getLong("mtime");
@@ -187,6 +193,9 @@ public class Item implements Parcelable {
         out.writeString(descs);
         out.writeString(imageurl);
         out.writeInt(pageview);
+        out.writeInt(room);
+        out.writeInt(age);
+        out.writeInt(area);
         out.writeString(mobile);
         out.writeLong(mTime);
     }
@@ -208,6 +217,9 @@ public class Item implements Parcelable {
         descs = in.readString();
         imageurl = in.readString();
         pageview = in.readInt();
+        room = in.readInt();
+        age = in.readInt();
+        area = in.readInt();
         mobile = in.readString();
         mTime = in.readLong();
     }
@@ -266,4 +278,27 @@ public class Item implements Parcelable {
 
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
+    }
+
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
+    }
 }
