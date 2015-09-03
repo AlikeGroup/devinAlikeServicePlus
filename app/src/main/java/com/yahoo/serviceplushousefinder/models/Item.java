@@ -237,8 +237,14 @@ public class Item implements Parcelable {
     };
 
     private String transPrice(String price){
-        BigDecimal c = new BigDecimal(price);
-        return c.toPlainString();
+        String[] priceSplit = price.split("E");
+        float basePrice = Float.parseFloat(priceSplit[0]);
+        int multiPrice = Integer.parseInt(priceSplit[1]);
+        double oPrice = basePrice * Math.pow(10, multiPrice);
+        BigDecimal c = new BigDecimal(String.valueOf(oPrice/10000));
+        double res = c.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        BigDecimal result = new BigDecimal(res);
+        return result.toPlainString()+" 萬元";
     }
 
 }
